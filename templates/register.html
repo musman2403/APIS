@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+        min-height: 100vh;
+    }
+    .auth-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        padding: 30px;
+        width: 100%;
+        max-width: 420px;
+    }
+</style>
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="auth-card text-center">
+
+        <!-- Logo -->
+        <img src="{% static 'img/logo.png' %}" alt="Logo" class="mb-3" style="width: 70px;">
+
+        <!-- Title -->
+        <h3 class="mb-4 fw-bold text-dark">Create Your Account 🎉</h3>
+
+        <!-- Django Register Form -->
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success w-100 fw-bold shadow-sm">📝 Register</button>
+        </form>
+
+        <!-- Link to Login -->
+        <p class="mt-3 small">
+            Already have an account?
+            <a href="{% url 'account_login' %}" class="fw-bold text-primary">Login here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

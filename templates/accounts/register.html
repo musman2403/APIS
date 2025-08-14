@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+        min-height: 100vh;
+    }
+</style>
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="card shadow-lg border-0 rounded-4 p-4 w-100" style="max-width: 420px; background-color: rgba(255, 255, 255, 0.95);">
+
+        <div class="text-center mb-3">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" style="width: 70px;">
+        </div>
+
+        <h3 class="text-center mb-4 fw-bold text-dark">Create Your Account 🎉</h3>
+
+        <form method="POST" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success w-100 shadow-sm fw-bold" type="submit">📝 Register</button>
+        </form>
+
+        <p class="text-center mt-3 small">
+            Already have an account?
+            <a href="{% url 'account_login' %}" class="fw-bold text-primary">Login here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

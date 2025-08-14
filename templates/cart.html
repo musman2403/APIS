@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load cart_filters %}
+{% block content %}
+<h1>Your Cart</h1>
+<hr>
+<h4 class="text-end">Total: $ {{ total_price }}</h4>
+
+{% if products %}
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card h-130" style="max-width: 18rem;">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 250px; object-fit: cover;">
+            {% elif product.image_url %}
+                <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}" style="height: 250px; object-fit: cover;">
+            {% endif %}
+
+            <div class="card-body p-2">
+                <h6 class="card-title">{{ product.name }}</h6>
+                <p class="card-text mb-2"><strong>$ {{ product.price }}</strong></p>
+
+                <form method="post" action="{% url 'update_quantity' product.id %}" class="d-flex align-items-center">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ cart|get_item:product.id|default:1 }}" min="1" class="form-control me-2" style="max-width: 80px;">
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<a href="#" class="btn btn-success mt-3">Proceed to Checkout</a>
+<a href="{% url 'clear_cart' %}" class="btn btn-danger mt-2">🗑️ Clear Cart</a>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+
+<a href="{% url 'product_list' %}" class="btn btn-secondary mt-4">← Back to Products</a>
+{% endblock %}

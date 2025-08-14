@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% load socialaccount %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(120deg, #ffecd2 0%, #fcb69f 100%);
+        min-height: 100vh;
+    }
+    .auth-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        padding: 30px;
+        width: 100%;
+        max-width: 420px;
+    }
+</style>
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="auth-card text-center">
+
+        <!-- Logo -->
+        <img src="{% static 'img/logo.png' %}" alt="Logo" class="mb-3" style="width: 70px;">
+
+        <!-- Title -->
+        <h3 class="mb-4 fw-bold text-dark">Welcome Back 👋</h3>
+
+        <!-- Django Login Form -->
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-warning w-100 fw-bold shadow-sm">🔐 Login</button>
+        </form>
+
+        <div class="text-muted mt-3">──────── or ────────</div>
+
+        <!-- Google Login -->
+        <a href="{% provider_login_url 'google' %}" class="btn btn-outline-danger w-100 mt-3 shadow-sm">
+            <i class="fab fa-google me-2"></i> Continue with Google
+        </a>
+
+        <!-- Link to Register -->
+        <p class="mt-3 small">
+            Don't have an account?
+            <a href="{% url 'account_signup' %}" class="fw-bold text-primary">Register here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
